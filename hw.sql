@@ -1,4 +1,4 @@
--- 1. Создать все необходимые внешние ключи и диаграмму отношений.
+-- 1. РЎРѕР·РґР°С‚СЊ РІСЃРµ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё Рё РґРёР°РіСЂР°РјРјСѓ РѕС‚РЅРѕС€РµРЅРёР№.
 
 ALTER TABLE profiles
   ADD CONSTRAINT profiles_user_id_fk 
@@ -75,19 +75,19 @@ ALTER TABLE posts
    FOREIGN KEY (media_id) REFERENCES media(id)
      ON DELETE CASCADE;
 
--- 2. Создать и заполнить таблицы лайков и постов.
+2. РЎРѕР·РґР°С‚СЊ Рё Р·Р°РїРѕР»РЅРёС‚СЊ С‚Р°Р±Р»РёС†С‹ Р»Р°Р№РєРѕРІ Рё РїРѕСЃС‚РѕРІ.
 
--- Таблица лайков
+-- РўР°Р±Р»РёС†Р° Р»Р°Р№РєРѕРІ
 DROP TABLE IF EXISTS likes;
 CREATE TABLE likes (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки",
-  user_id INT UNSIGNED NOT NULL COMMENT "Автор лайка",
-  target_id INT UNSIGNED NOT NULL COMMENT "Указывает на конкретную строку, которой лайк поставлен",
-  target_type_id INT UNSIGNED NOT NULL COMMENT "Определяет таблицу, где находится строка target_id",
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ",
+  user_id INT UNSIGNED NOT NULL COMMENT "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+  target_id INT UNSIGNED NOT NULL COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  target_type_id INT UNSIGNED NOT NULL COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ target_id",
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Таблица типов лайков
+-- РўР°Р±Р»РёС†Р° С‚РёРїРѕРІ Р»Р°Р№РєРѕРІ
 DROP TABLE IF EXISTS target_types;
 CREATE TABLE target_types (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -101,7 +101,7 @@ INSERT INTO target_types (name) VALUES
   ('media'),
   ('posts');
  
- -- Заполняем лайки
+-- Р—Р°РїРѕР»РЅСЏРµРј Р»Р°Р№РєРё
 INSERT INTO likes 
   SELECT 
     id, 
@@ -111,28 +111,28 @@ INSERT INTO likes
     CURRENT_TIMESTAMP 
   FROM messages;
 
--- Создадим таблицу постов
+-- РЎРѕР·РґР°РґРёРј С‚Р°Р±Р»РёС†Сѓ РїРѕСЃС‚РѕРІ
 DROP TABLE IF EXISTS posts;
 CREATE TABLE posts (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки",
-  user_id INT UNSIGNED NOT NULL COMMENT "Автор поста",
-  community_id INT UNSIGNED COMMENT "Пост может принадлежать community",
-  head VARCHAR(255) COMMENT "Заголовок",
-  body TEXT NOT NULL COMMENT "Тело",
-  media_id INT UNSIGNED COMMENT "Приложенный медиафайл",
-  is_public BOOLEAN DEFAULT TRUE COMMENT "Флаг публичный",
-  is_archived BOOLEAN DEFAULT FALSE COMMENT "Флог заархивированный",
-  views_counter INT UNSIGNED DEFAULT 0 COMMENT "Заголовок",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Количество просмотров",
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ",
+  user_id INT UNSIGNED NOT NULL COMMENT "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+  community_id INT UNSIGNED COMMENT "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ community",
+  head VARCHAR(255) COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  body TEXT NOT NULL COMMENT "пїЅпїЅпїЅпїЅ",
+  media_id INT UNSIGNED COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  is_public BOOLEAN DEFAULT TRUE COMMENT "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  is_archived BOOLEAN DEFAULT FALSE COMMENT "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  views_counter INT UNSIGNED DEFAULT 0 COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- заполнил фейкером данные в таблицу posts, получил заполненные столбцы как user_id, так и community_id, но пост принадлежит либо user либо community    
+-- Р·Р°РїРѕР»РЅРёР» С„РµР№РєРµСЂРѕРј С‚Р°Р±Р»РёС†Сѓ posts, РїРѕР»СЏ user_id Рё community_id Р·Р°РїРѕР»РЅРµРЅС‹ РІРµР·РґРµ, РЅРѕ РїРѕСЃС‚ РјРѕР¶РµС‚ РїСЂРёРЅР°РґР»РµР¶Р°С‚СЊ Р»РёР±Рѕ user Р»РёР±Рѕ community    
 DESC posts;
 
 SELECT * FROM posts LIMIT 25;
 
-ALTER TABLE posts MODIFY COLUMN user_id INT UNSIGNED; -- user_id было NOT NULL
+ALTER TABLE posts MODIFY COLUMN user_id INT UNSIGNED; -- user_id Р±С‹Р»Рѕ NOT NULL
 
 CREATE TEMPORARY TABLE communities_temp (id INT);
 
@@ -147,11 +147,11 @@ INSERT INTO communities_temp VALUES
   (NULL),
   (NULL);
 
-UPDATE posts SET community_id = (SELECT id FROM communities_temp ORDER BY RAND() LIMIT 1); -- заполнил community_id случайными значениями с NULL из временной таблицы
+UPDATE posts SET community_id = (SELECT id FROM communities_temp ORDER BY RAND() LIMIT 1); -- Р·Р°РїРѕР»РЅРёР» community_id СЂР°РЅРґРѕРјРЅРѕ СЃРѕ Р·РЅР°С‡РµРЅРёСЏРјРё NULL
 
-UPDATE posts SET user_id = NULL WHERE community_id > 0; -- в замисимости от значения community_id проставил NULL в user_id
+UPDATE posts SET user_id = NULL WHERE community_id > 0; -- РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р·РЅР°С‡РµРЅРёСЏ community_id РїСЂРѕСЃС‚Р°РІРёР» NULL РІ user_id
 
--- 3. Определить кто больше поставил лайков (всего) - мужчины или женщины?
+-- 3. РћРїСЂРµРґРµР»РёС‚СЊ РєС‚Рѕ Р±РѕР»СЊС€Рµ РїРѕСЃС‚Р°РІРёР» Р»Р°Р№РєРѕРІ (РІСЃРµРіРѕ) - РјСѓР¶С‡РёРЅС‹ РёР»Рё Р¶РµРЅС‰РёРЅС‹?
 
 DESC likes;
 
@@ -160,7 +160,7 @@ SELECT COUNT(*) AS total,
  FROM likes
  GROUP BY gender;
 
--- 4. Подсчитать общее количество лайков десяти самым молодым пользователям (сколько лайков получили 10 самых молодых пользователей).
+-- 4. РџРѕРґСЃС‡РёС‚Р°С‚СЊ РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»Р°Р№РєРѕРІ РґРµСЃСЏС‚Рё СЃР°РјС‹Рј РјРѕР»РѕРґС‹Рј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРј (СЃРєРѕР»СЊРєРѕ Р»Р°Р№РєРѕРІ РїРѕР»СѓС‡РёР»Рё 10 СЃР°РјС‹С… РјРѕР»РѕРґС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№).
 
 DESC likes;
 
@@ -170,18 +170,18 @@ DESC profiles;
 
 SELECT target_id FROM likes 
   WHERE target_type_id = 
-   (SELECT id FROM target_types WHERE name = 'users'); -- выборка лайков пользователям, но значения все равно принадлежат таблице media, подскажите как исправить, пожалуйста.
+   (SELECT id FROM target_types WHERE name = 'users'); -- РІС‹Р±РѕСЂРєР° Р»Р°Р№РєРѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРј
 
 
-SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) AS youngests; -- 10 самых молодых пользователей
+SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) AS youngests; -- 10 СЃР°РјС‹С… РјРѕР»РѕРґС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 
 SELECT COUNT(*) FROM likes
   WHERE target_type_id = (SELECT id FROM target_types WHERE name = 'users')
-  AND target_id IN (SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) AS youngests); -- решение
+  AND target_id IN (SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) AS youngests); -- СЂРµС€РµРЅРёРµ
   
--- 5. Найти 10 пользователей, которые проявляют наименьшую активность в использовании социальной сети
--- (критерии активности необходимо определить самостоятельно).
--- Критерии активности: количество сообщений, количество лайков, количество постов.
+-- 5. РќР°Р№С‚Рё 10 РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№, РєРѕС‚РѕСЂС‹Рµ РїСЂРѕСЏРІР»СЏСЋС‚ РЅР°РёРјРµРЅСЊС€СѓСЋ Р°РєС‚РёРІРЅРѕСЃС‚СЊ РІ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё СЃРѕС†РёР°Р»СЊРЅРѕР№ СЃРµС‚Рё
+-- (РєСЂРёС‚РµСЂРёРё Р°РєС‚РёРІРЅРѕСЃС‚Рё РЅРµРѕР±С…РѕРґРёРјРѕ РѕРїСЂРµРґРµР»РёС‚СЊ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ).
+-- РљСЂРёС‚РµСЂРёРё Р°РєС‚РёРІРЅРѕСЃС‚Рё: РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРѕР±С‰РµРЅРёР№, РєРѕР»РёС‡РµСЃС‚РІРѕ Р»Р°Р№РєРѕРІ, РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃС‚РѕРІ.
 
 DESC messages;
 SELECT * FROM messages;
@@ -191,31 +191,31 @@ DESC likes;
 DESC posts;
 SELECT * FROM posts;
 
-SELECT from_user_id, COUNT(*) as total_messages FROM messages GROUP BY from_user_id; -- количество сообщений, написанных пользователем
+SELECT from_user_id, COUNT(*) as total_messages FROM messages GROUP BY from_user_id; -- РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРѕР±С‰РµРЅРёР№, РЅР°РїРёСЃР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 
-SELECT user_id , COUNT(*) as total_likes FROM likes GROUP BY user_id; -- количество лайков, поставленных пользователем
+SELECT user_id , COUNT(*) as total_likes FROM likes GROUP BY user_id; -- РєРѕР»РёС‡РµСЃС‚РІРѕ Р»Р°Р№РєРѕРІ, РїРѕСЃС‚Р°РІР»РµРЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 
-SELECT user_id , COUNT(*) as total_posts FROM posts GROUP BY user_id; -- количество постов, опубликованных пользователем
+SELECT user_id , COUNT(*) as total_posts FROM posts GROUP BY user_id; -- РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃС‚РѕРІ, РѕРїСѓР±Р»РёРєРѕРІР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 
 SELECT id,
   IF(id IN (SELECT from_user_id FROM messages), (SELECT COUNT(*) FROM messages WHERE from_user_id = users.id GROUP BY from_user_id), 0) AS total_messages
   FROM users
   ORDER BY total_messages
-  LIMIT 10;                                                           -- наименьшая активность по критерию "сообщения"
+  LIMIT 10;                                                           -- РЅР°РёРјРµРЅСЊС€Р°СЏ Р°РєС‚РёРІРЅРѕСЃС‚СЊ РїРѕ РєСЂРёС‚РµСЂРёСЋ "СЃРѕРѕР±С‰РµРЅРёСЏ"
 
 SELECT id,
   IF(id IN (SELECT user_id FROM likes), (SELECT COUNT(*) FROM likes WHERE user_id = users.id GROUP BY user_id), 0) AS total_likes
   FROM users
   ORDER BY total_likes
-  LIMIT 10;                                                           -- наименьшая активность по критерию "лайки"
+  LIMIT 10;                                                           -- РЅР°РёРјРµРЅСЊС€Р°СЏ Р°РєС‚РёРІРЅРѕСЃС‚СЊ РїРѕ РєСЂРёС‚РµСЂРёСЋ "Р»Р°Р№РєРё"
 
 SELECT id,
   IF(id IN (SELECT user_id FROM posts), (SELECT COUNT(*) FROM posts WHERE user_id = users.id GROUP BY user_id), 0) AS total_posts
   FROM users
   ORDER BY total_posts
-  LIMIT 10;                                                           -- наименьшая активность по критерию "посты"
+  LIMIT 10;                                                           -- РЅР°РёРјРµРЅСЊС€Р°СЏ Р°РєС‚РёРІРЅРѕСЃС‚СЊ РїРѕ РєСЂРёС‚РµСЂРёСЋ "РїРѕСЃС‚С‹"
   
--- объединяем данные через UNION
+-- РѕР±СЉРµРґРёРЅСЏРµРј РґР°РЅРЅС‹Рµ С‡РµСЂРµР· UNION
 
  SELECT * FROM
     (SELECT id,
@@ -236,7 +236,7 @@ UNION ALL
       IF(id IN (SELECT user_id FROM posts), (SELECT COUNT(*) FROM posts WHERE user_id = users.id GROUP BY user_id), 0) AS total
         FROM users
           ORDER BY total
-            LIMIT 10) AS total_posts; -- получили общую таблицу по минимальным действия пользователя, могут повторяться id, нужно суммировать и отсортировать
+            LIMIT 10) AS total_posts; -- РїРѕР»СѓС‡РёР»Рё РѕР±С‰СѓСЋ С‚Р°Р±Р»РёС†Сѓ РїРѕ РјРёРЅРёРјР°Р»СЊРЅС‹Рј РґРµР№СЃС‚РІРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РјРѕРіСѓС‚ РїРѕРІС‚РѕСЂСЏС‚СЊСЃСЏ id, РЅСѓР¶РЅРѕ СЃСѓРјРјРёСЂРѕРІР°С‚СЊ Рё РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ
             
 SELECT id,
   SUM(total) AS total_activity
